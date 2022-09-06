@@ -37,26 +37,22 @@ def get_birthdays_per_week(users: list) -> None:
 
     report_birthday(
         this_week,
+        "{} - {}".format(start_current_week.strftime("%d.%m.%Y"), end_current_week.strftime("%d.%m.%Y"))
+    )
+
+    report_birthday(
         next_week,
-        "{} - {}".format(start_current_week.strftime("%d.%m.%Y"), end_current_week.strftime("%d.%m.%Y")),
         "{} - {}".format(end_current_week.strftime("%d.%m.%Y"), end_next_week.strftime("%d.%m.%Y"))
     )
 
 
-def report_birthday(this_week: dict, next_week: dict, this_dates: str, next_dates: str) -> None:
-    this_week = ["{:<11}: {}".format(day, ', '.join(names)) for day, names in this_week.items() if names]
-    next_week = ["{:<11}: {}".format(day, ', '.join(names)) for day, names in next_week.items() if names]
+def report_birthday(week: dict, dates: str) -> None:
+    week = ["{:<11}: {}".format(day, ', '.join(names)) for day, names in week.items() if names]
 
-    if this_week:
-        print(this_dates)
+    if week:
+        print('\n' + dates)
 
-        for day in this_week:
-            print(day)
-
-    if next_week:
-        print('\n' + next_dates)
-
-        for day in next_week:
+        for day in week:
             print(day)
 
 
