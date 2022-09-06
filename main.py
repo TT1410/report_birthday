@@ -1,4 +1,8 @@
 from datetime import datetime, timedelta
+from copy import deepcopy
+
+
+WEEK = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": []}
 
 
 def get_birthdays_per_week(users: list) -> None:
@@ -8,19 +12,19 @@ def get_birthdays_per_week(users: list) -> None:
     end_current_week = (today + timedelta(4 - today.weekday()))  # дата кінця поточного тижня (п'ятниця)
     end_next_week = (today + timedelta(4 - today.weekday() + 7))  # дата кінця наступного тижня (п'ятниця)
 
-    this_week = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": []}
-    next_week = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": []}
+    this_week = deepcopy(WEEK)
+    next_week = deepcopy(WEEK)
 
     for user in users:
         birthday: datetime = user["birthday"].replace(year=today.year)
 
         if (birthday >= start_current_week) and (birthday <= end_next_week):
+            name_weekday = "Monday" if birthday.weekday() in (5, 6) else birthday.strftime("%A")
+
             if birthday < end_current_week:
-                name_weekday = "Monday" if birthday.weekday() in (5, 6) else birthday.strftime("%A")
                 this_week[name_weekday].append(user['name'])
 
             else:
-                name_weekday = "Monday" if birthday.weekday() in (5, 6) else birthday.strftime("%A")
                 next_week[name_weekday].append(user['name'])
 
     report_birthday(
