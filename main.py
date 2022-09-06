@@ -6,8 +6,7 @@ WEEK = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": 
 
 
 def get_birthdays_per_week(users: list) -> None:
-    # today = datetime.now()  # сьогоднішня дата
-    today = datetime(2022, 12, 30)  # сьогоднішня дата
+    today = datetime.now()  # сьогоднішня дата
 
     start_current_week = (today - timedelta(2 + today.weekday()))  # дата початку цього тижня (не з понеділка, а з суботи минулого)
     end_current_week = (today + timedelta(4 - today.weekday()))  # дата кінця поточного тижня (п'ятниця)
