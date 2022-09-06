@@ -6,7 +6,8 @@ WEEK = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": 
 
 
 def get_birthdays_per_week(users: list) -> None:
-    today = datetime.now()  # сьогоднішня дата
+    # today = datetime.now()  # сьогоднішня дата
+    today = datetime(2022, 12, 30)  # сьогоднішня дата
 
     start_current_week = (today - timedelta(2 + today.weekday()))  # дата початку цього тижня (не з понеділка, а з суботи минулого)
     end_current_week = (today + timedelta(4 - today.weekday()))  # дата кінця поточного тижня (п'ятниця)
@@ -17,6 +18,14 @@ def get_birthdays_per_week(users: list) -> None:
 
     for user in users:
         birthday: datetime = user["birthday"].replace(year=today.year)
+
+        if datetime(today.year, 1, 7) >= today:
+            if birthday.month == 12 and birthday > datetime(today.year, 1, 1):
+                birthday = birthday.replace(year=today.year-1)
+
+        elif datetime(today.year, 12, 24) <= today:
+            if birthday.month == 1 and birthday > datetime(today.year, 1, 1):
+                birthday = birthday.replace(year=today.year+1)
 
         if (birthday >= start_current_week) and (birthday <= end_next_week):
             name_weekday = "Monday" if birthday.weekday() in (5, 6) else birthday.strftime("%A")
@@ -71,11 +80,11 @@ USERS = [
     },
     {
         "name": "Dmytro",
-        "birthday": datetime(1993, 9, 19)
+        "birthday": datetime(1993, 1, 2)
     },
     {
         "name": "Ivan",
-        "birthday": datetime(2000, 8, 3)
+        "birthday": datetime(2000, 12, 31)
     }
 ]
 
